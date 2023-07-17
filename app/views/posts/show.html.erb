@@ -1,0 +1,11 @@
+
+<div class="box">
+<h1 class="post-title"><%= @post.title %></h1>
+
+<p class="post-content"><%= @post.content %></p>
+
+<p class="post-author">Created by <%= @post.user.name %></p>
+
+<%= link_to 'Edit', edit_post_path(@post), class: "edit-link" %> |
+<%= link_to 'Back', posts_path, class: "back-link" %>
+</div>

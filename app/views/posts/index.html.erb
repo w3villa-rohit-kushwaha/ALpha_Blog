@@ -1,0 +1,26 @@
+<h1 class="heading">Posts</h1>
+
+<ul>
+  <% @posts.each do |post| %>
+    <li class="box">
+
+     <h2> <%= post.title %> </h2>
+      <% if @current_user && @current_user.admin? %>
+       <div style="display:flex; justify-content:space-around ;justify-content:center">
+        <div><%= link_to 'Edit', edit_post_path(post), class: 'edit' %></div>
+        <%= form_with url: post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'delete-button' do |form| %>
+  <%= form.submit 'Delete' %>
+<% end %>
+
+      <% end %>
+      <div><%= link_to 'show' , post_path(post) , class: 'show'%></div>
+    </li>
+  <% end %>
+  </div>
+</ul>
+
+<% if @current_user && @current_user.admin? %>
+  <b><%= link_to 'New Post', new_post_path , class:'new' %></b>
+<% else %>
+ <b> <%= link_to ' New Post', new_post_path , class:'new' %></b>
+<% end %>

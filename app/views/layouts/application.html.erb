@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <a class="navbar-brand" href="/">MyApp</a>
+
+      <div class="navbar-links">
+        <% if @current_user %>
+          <span class="navbar-user">
+            Logged in as <%= @current_user.admin? ? ' (Admin)' : '' %><%= @current_user.name %>
+          </span>
+          <%= turbo_frame_tag 'logout-link' do %>
+            <%= form_with(url: logout_path, method: :delete) do |form| %>
+              <%= form.submit 'Logout', class: 'btn btn-secondary' %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= link_to 'Login', login_path, class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </nav>
+
+    <div class="flash-messages">
+      <% if flash[:notice] %>
+        <div class="flash-message">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>
